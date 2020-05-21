@@ -12,6 +12,7 @@ router.get("/all", (req, res, next) => {
 
 router.post("/create", (req, res, next) => {
     const { name, type, configTopic, listenTopic } = req.body;
+    console.log(name, type);
 });
 
 export default router;
