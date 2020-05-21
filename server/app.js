@@ -7,7 +7,8 @@ import path from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 import mongoose from "mongoose";
-mongoose.connect("mongodb://localhost/test", { useNewUrlParser: true });
+require("dotenv").config();
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
