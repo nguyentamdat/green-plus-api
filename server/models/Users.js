@@ -21,6 +21,7 @@ const UserSchema = new mongoose.Schema(
             type: String,
             default: uuidv4,
         },
+        devices: [{ type: mongoose.Schema.Types.ObjectId, ref: "devices" }],
     },
     { strict: false }
 );

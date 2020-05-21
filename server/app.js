@@ -19,6 +19,7 @@ db.once("open", () => {
 import indexRouter from "./routes/index";
 import usersRouter from "./routes/users";
 import authRouter from "./routes/auth";
+import deviceRouter from "./routes/devices";
 
 import passport from "./config/passport";
 
@@ -34,5 +35,6 @@ app.use(passport.initialize());
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/device", deviceRouter);
 
 export default app;
