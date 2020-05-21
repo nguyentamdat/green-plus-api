@@ -64,7 +64,13 @@ passport.use(
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
             secretOrKey: process.env.JWT_SECRET,
         },
-        (token, next) => {}
+        (token, next) => {
+            const userId = token._id;
+            User.findById(userId, (err, doc) => {
+                if (err) return next(err);
+                if (!doc) return next(null, false, { message: "Unauthorized" });
+            });
+        }
     )
 );
 
