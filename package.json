@@ -20,8 +20,8 @@
         "transpile": "babel ./server --out-dir dist-server",
         "clean": "rimraf dist-server",
         "build-babel": "npm-run-all clean transpile",
-        "dev": "NODE_ENV=development npm-run-all build server",
-        "prod": "NODE_ENV=production npm-run-all build server",
+        "dev": "NODE_ENV=development npm-run-all build-babel server",
+        "prod": "NODE_ENV=production npm-run-all build-bebel server",
         "start": "npm run prod",
         "build": "npm run prod"
     },
