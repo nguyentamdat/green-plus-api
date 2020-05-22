@@ -9,9 +9,9 @@ const DeviceSchema = new mongoose.Schema(
         },
         name: String,
         type: String,
-        configTopic: String,
-        listenTopic: String,
-        id: String,
+        configTopic: { type: String, required: true },
+        listenTopic: { type: String, required: true },
+        id: { type: String, unique: true, required: true },
         log: [{ value: String, time: Date }],
     },
     { strict: false }
