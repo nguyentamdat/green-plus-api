@@ -11,6 +11,8 @@ const DeviceSchema = new mongoose.Schema(
         type: String,
         configTopic: String,
         listenTopic: String,
+        id: String,
+        log: [{ value: String, time: Date }],
     },
     { strict: false }
 );
