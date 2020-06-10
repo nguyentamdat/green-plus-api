@@ -5,6 +5,7 @@ import { success, failure } from "../helper/response";
 
 const callback = (req, res, next) => {
     return (err, result) => {
+        console.log(err, result);
         if (err) return res.send(failure(err));
         return res.send(success(result));
     };
