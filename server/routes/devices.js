@@ -43,7 +43,10 @@ router.get("/range", (req, res, next) => {
             _id: deviceId,
             log: {
                 $elemMatch: {
-                    time: { $gte: new Date(from), $lt: new Date(to) },
+                    time: {
+                        $gte: new Date(from).toISOString(),
+                        $lt: new Date(to).toISOString(),
+                    },
                 },
             },
         },
