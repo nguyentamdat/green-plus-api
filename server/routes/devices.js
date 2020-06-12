@@ -63,14 +63,16 @@ router.post("/config", (req, res, next) => {
         username: "BKvm2",
         password: "Hcmut_CSE_2020",
     });
-    const configTopic = Device.findOne({ id: deviceId }).exec().configTopic;
-    client.publish(configTopic, JSON.stringify(mes), { qos: 1 }, (err) => {
-        if (err) {
-            res.send(failure(err));
-        } else {
-            res.send(success("Successfully"));
-        }
-        client.end(true);
+    Device.findOne({ id: deviceId }).then((device) => {
+        const configTopic = device.configTopic;
+        client.publish(configTopic, JSON.stringify(mes), { qos: 1 }, (err) => {
+            if (err) {
+                res.send(failure(err));
+            } else {
+                res.send(success("Successfully"));
+            }
+            client.end(true);
+        });
     });
     client.on("connect", (connack) => {
         console.log(connack);
