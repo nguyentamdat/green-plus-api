@@ -70,6 +70,7 @@ router.post("/config", (req, res, next) => {
         } else {
             res.send(success("Successfully"));
         }
+        client.end(true);
     });
     client.on("connect", (connack) => {
         console.log(connack);
@@ -77,7 +78,6 @@ router.post("/config", (req, res, next) => {
     client.on("packetsend", (packet) => {
         console.log(packet);
     });
-    client.end(true);
 });
 
 export default router;
