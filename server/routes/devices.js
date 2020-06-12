@@ -71,6 +71,12 @@ router.post("/config", (req, res, next) => {
             res.send(success("Successfully"));
         }
     });
+    client.on("connect", (connack) => {
+        console.log(connack);
+    });
+    client.on("packetsend", (packet) => {
+        console.log(packet);
+    });
     client.end(true);
 });
 
