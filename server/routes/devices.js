@@ -65,14 +65,19 @@ router.post("/config", (req, res, next) => {
     });
     Device.findOne({ id: deviceId }).then((device) => {
         const configTopic = device.configTopic;
-        client.publish(configTopic, JSON.stringify(mes), { qos: 1 }, (err) => {
-            if (err) {
-                res.send(failure(err));
-            } else {
-                res.send(success("Successfully"));
+        client.publish(
+            configTopic,
+            JSON.stringify([mes]),
+            { qos: 1 },
+            (err) => {
+                if (err) {
+                    res.send(failure(err));
+                } else {
+                    res.send(success("Successfully"));
+                }
+                client.end(true);
             }
-            client.end(true);
-        });
+        );
     });
     client.on("connect", (connack) => {
         console.log(connack);
