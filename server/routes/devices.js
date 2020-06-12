@@ -64,7 +64,7 @@ router.post("/config", (req, res, next) => {
         password: "Hcmut_CSE_2020",
     });
     const configTopic = Device.findOne({ id: deviceId }).exec().configTopic;
-    client.publish(configTopic, mes, { qos: 1 }, (err) => {
+    client.publish(configTopic, JSON.stringify(mes), { qos: 1 }, (err) => {
         if (err) {
             res.send(failure(err));
         } else {
