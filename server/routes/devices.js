@@ -2,6 +2,7 @@ import express from "express";
 const router = express.Router();
 import Device from "../models/Devices";
 import { success, failure } from "../helper/response";
+import mqtt from "mqtt";
 
 const callback = (req, res, next) => {
     return (err, result) => {
@@ -53,6 +54,18 @@ router.get("/range", (req, res, next) => {
 router.delete("/", (req, res, next) => {
     const deviceId = req.body.deviceId;
     Device.deleteOne({ _id: deviceId }, callback(req, res, next));
+});
+
+router.post("/config", (req, res, next) => {
+    const { deviceId, msg } = req.body;
+    const mes = { device_id: deviceId, values: msg };
+    const client = mqtt.connect("tcp://13.76.250.158:1883", {
+        username: "BKvm2",
+        password: "Hcmut_CSE_2020",
+    });
+    const configTopic = Device.findOne({ id: deviceId }).exec().configTopic;
+    client.publish(configTopic, mes);
+    client.end(true);
 });
 
 export default router;
