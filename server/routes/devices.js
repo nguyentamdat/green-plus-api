@@ -26,12 +26,12 @@ router.post("/create", (req, res, next) => {
 
 router.get("/", (req, res, next) => {
     const deviceId = req.body.deviceId;
-    Device.find({ id: deviceId }, callback(req, res, next));
+    Device.findOne({ id: deviceId }, callback(req, res, next));
 });
 
 router.get("/latest", (req, res, next) => {
     const deviceId = req.body.deviceId;
-    Device.find({ id: deviceId }, (err, result) => {
+    Device.findOne({ id: deviceId }, (err, result) => {
         const data = result.log[result.log.length - 1] || [];
         return callback(req, res, next)(err, data);
     });
@@ -39,9 +39,10 @@ router.get("/latest", (req, res, next) => {
 
 router.get("/range", (req, res, next) => {
     const { deviceId, from, to } = req.body;
-    Device.find(
+    console.log(from, to);
+    Device.findOne(
         {
-            _id: deviceId,
+            id: deviceId,
             "log.time": {
                 $gte: new Date(from),
                 $lt: new Date(to),
@@ -68,7 +69,7 @@ router.post("/config", (req, res, next) => {
         client.publish(
             configTopic,
             JSON.stringify([mes]),
-            { qos: 1 },
+            { qos: 2 },
             (err) => {
                 if (err) {
                     res.send(failure(err));
