@@ -26,12 +26,12 @@ router.post("/create", (req, res, next) => {
 
 router.get("/", (req, res, next) => {
     const deviceId = req.body.deviceId;
-    Device.findById(deviceId, callback(req, res, next));
+    Device.find({ id: deviceId }, callback(req, res, next));
 });
 
 router.get("/latest", (req, res, next) => {
     const deviceId = req.body.deviceId;
-    Device.findById(deviceId, (err, result) => {
+    Device.find({ id: deviceId }, (err, result) => {
         const data = result.log[result.log.length - 1] || [];
         return callback(req, res, next)(err, data);
     });
