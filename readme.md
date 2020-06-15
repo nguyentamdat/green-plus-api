@@ -72,12 +72,12 @@
         }, ...]
     }
 ```
-### Get device by _id
+### Get device by device_id
 #### Request
 ```
     GET /api/device
     body: {
-        "deviceId": "_id"
+        "deviceId": "device_id"
     }
 ```
 #### Response
@@ -109,9 +109,9 @@
 ### Config device
 #### Request
 ```
-    GET /api/device
+    GET /api/device/config
     body: {
-        "deviceId": "id",
+        "deviceId": "device_id",
         "msg": ["val1", "val2"]
     }
 ```
@@ -122,5 +122,64 @@
         msg: String, // message about error from server
         statusCode: Integer,
         data: "Successfully"
+    }
+```
+### Get value from Date to Date
+#### Request
+```
+    GET /api/device/range
+    body: {
+        "deviceId": "device_id",
+        "from": Date,
+        "to": Date
+    }
+```
+#### Response
+```
+    body: {
+        success: Boolean,
+        msg: String, // message about error from server
+        statusCode: Integer,
+        data: {
+            "_id": "e1231152-2c9d-4267-8469-ff1fb5a870f4",
+            "name": "TempHumi",
+            "type": "5",
+            "id": "TempHumi ",
+            "configTopic": "Topic/TempHumi",
+            "listenTopic": "Topic/TempHumi",
+            "log": [
+                {
+                    "values": [
+                        "27",
+                        "39"
+                    ],
+                    "time": "2020-06-12T08:57:13.718Z"
+                }
+            ],
+            "__v": 0
+        }
+    }
+```
+### Get latest value
+#### Request
+```
+    GET /api/device/latest
+    body: {
+        "deviceId": "device_id"
+    }
+```
+#### Response
+```
+    body: {
+        "success": true,
+        "msg": "",
+        "statusCode": 0,
+        "data": {
+            "values": [
+                "31",
+                "42"
+            ],
+            "time": "2020-06-14T15:14:07.273Z"
+        }
     }
 ```
