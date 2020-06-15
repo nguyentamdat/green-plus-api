@@ -32,7 +32,7 @@ router.get("/", (req, res, next) => {
 router.get("/latest", (req, res, next) => {
     const deviceId = req.body.deviceId;
     Device.findById(deviceId, (err, result) => {
-        const data = result.log[0] || [];
+        const data = result.log[result.log.length - 1] || [];
         return callback(req, res, next)(err, data);
     });
 });
