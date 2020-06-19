@@ -79,7 +79,7 @@ client.on("message", (topic, message, packet) => {
                 if (err) {
                     return console.log(err);
                 }
-                console.log(result);
+                //console.log(result);
             }
         );
     } catch (e) {

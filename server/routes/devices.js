@@ -6,7 +6,7 @@ import client from "../helper/mqtt";
 
 const callback = (req, res, next) => {
     return (err, result) => {
-        // console.log(err, result);
+        console.log(err, result);
         if (err) return res.send(failure(err));
         return res.send(success(result));
     };
