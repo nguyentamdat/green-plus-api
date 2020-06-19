@@ -26,6 +26,7 @@ router.post("/create", (req, res, next) => {
 
 router.post("/", (req, res, next) => {
     const deviceId = req.body.deviceId;
+    console.log(req.body, req.params);
     Device.findOne({ id: deviceId }, callback(req, res, next));
 });
 
