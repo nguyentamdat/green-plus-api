@@ -13,6 +13,8 @@ const DeviceSchema = new mongoose.Schema(
         listenTopic: { type: String, required: true },
         id: { type: String, unique: true, required: true },
         log: [{ values: [String], time: { type: Date, default: Date.now } }],
+        min: [{ type: Number, default: 0 }],
+        max: [{ type: Number, default: 0 }],
     },
     { strict: false }
 );
