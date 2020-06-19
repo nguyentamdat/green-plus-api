@@ -6,7 +6,7 @@ import client from "../helper/mqtt";
 
 const callback = (req, res, next) => {
     return (err, result) => {
-        console.log(err, result);
+        // console.log(err, result);
         if (err) return res.send(failure(err));
         return res.send(success(result));
     };
@@ -26,7 +26,6 @@ router.post("/create", (req, res, next) => {
 
 router.post("/", (req, res, next) => {
     const deviceId = req.body.deviceId;
-    console.log(req.body, req.params);
     Device.findOne({ id: deviceId }, callback(req, res, next));
 });
 
