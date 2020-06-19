@@ -75,7 +75,7 @@
 ### Get device by device_id
 #### Request
 ```
-    GET /api/device
+    POST /api/device
     body: {
         "deviceId": "device_id"
     }
@@ -109,7 +109,7 @@
 ### Config device
 #### Request
 ```
-    GET /api/device/config
+    POST /api/device/config
     body: {
         "deviceId": "device_id",
         "msg": ["val1", "val2"]
@@ -127,7 +127,7 @@
 ### Get value from Date to Date
 #### Request
 ```
-    GET /api/device/range
+    POST /api/device/range
     body: {
         "deviceId": "device_id",
         "from": Date,
@@ -163,7 +163,7 @@
 ### Get latest value
 #### Request
 ```
-    GET /api/device/latest
+    POST /api/device/latest
     body: {
         "deviceId": "device_id"
     }
