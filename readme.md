@@ -112,7 +112,8 @@
     POST /api/device/config
     body: {
         "deviceId": "device_id",
-        "msg": ["val1", "val2"]
+        "min": int,
+        "max": int
     }
 ```
 #### Response

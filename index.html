@@ -8,12 +8,12 @@
 </head>
 
 <body>
-    <div class="result"></div>
+    <div id="result"></div>
 </body>
 <script>
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    var baseUrl = "demo"
+    var baseUrl = "http://green-plus-api.herokuapp.com"
     var raw = JSON.stringify({
         deviceId: "LightD"
     });
@@ -21,12 +21,17 @@
     var requestOptions = {
         method: 'POST',
         body: raw,
-        headers: myHeaders
+        headers: {
+            "Content-Type": "application/json"
+        }
     };
     console.log(requestOptions);
-    fetch(`${baseUrl}/api/device/`, requestOptions)
+    fetch(`${baseUrl}/api/device`, requestOptions)
         .then(response => response.json())
-        .then(result => console.log(result))
+        .then(result => {
+            console.log(result)
+            document.getElementById('result').innerText = result.data.log[0].values;
+        })
         .catch(error => console.log('error', error));
 </script>
 
