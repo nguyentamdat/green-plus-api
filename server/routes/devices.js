@@ -12,7 +12,21 @@ const callback = (req, res, next) => {
 };
 
 router.get("/all", (req, res, next) => {
-    Device.find(callback(req, res, next));
+    Device.aggregate(
+        [
+            {
+                $project: {
+                    name: "$name",
+                    type: "$type",
+                    min: "$min",
+                    max: "$max",
+                    id: "$id",
+                    log: { $slice: ["$log", -50] },
+                },
+            },
+        ],
+        callback(req, res, next)
+    );
 });
 
 router.post("/create", (req, res, next) => {
