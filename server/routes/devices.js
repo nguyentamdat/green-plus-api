@@ -2,7 +2,6 @@ import express from "express";
 const router = express.Router();
 import Device from "../models/Devices";
 import { success, failure } from "../helper/response";
-import client from "../helper/mqtt";
 
 const callback = (req, res, next) => {
     return (err, result) => {

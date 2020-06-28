@@ -1,7 +1,8 @@
 import mqtt from "mqtt";
 import Devices from "../models/Devices";
 require("dotenv").config();
-
+import mongoose from "mongoose";
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
 const client = mqtt.connect(process.env.MQTT_URI, {
     username: process.env.MQTT_USERNAME,
     password: process.env.MQTT_PASSWORD,
@@ -24,6 +25,7 @@ client.subscribe("Topic/#", { qos: 2 }, (err, granted) => {
 });
 
 setInterval(() => {
+    console.log("Interval actived");
     Devices.aggregate(
         [
             {
@@ -36,6 +38,7 @@ setInterval(() => {
             },
         ],
         (err, res) => {
+            console.log(err);
             const checkInRange = (val, min, max) => val >= min && val <= max;
             res = res.map((item) => ({
                 id: item.id,
@@ -107,5 +110,3 @@ client.on("message", (topic, message, packet) => {
         console.log(e);
     }
 });
-
-export default client;
