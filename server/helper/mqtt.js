@@ -96,7 +96,7 @@ client.on("message", async(topic, message, packet) => {
     try {
         const [msg] = JSON.parse(message);
         let doc = await Device.findOne({ id: msg.device_id });
-        doc.log = await doc.log.slice(-500)
+        doc.log = doc.log.slice(-500)
         await doc.log.push({ values: msg.values, time: Date.now() });
         await doc.save();
         // Devices.updateOne({ id: msg.device_id }, { $push: { log: { values: msg.values, time: Date.now() } } },
