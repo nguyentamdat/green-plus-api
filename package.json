@@ -29,6 +29,7 @@
         "@babel/cli": "^7.8.4",
         "@babel/core": "^7.9.6",
         "@babel/preset-env": "^7.9.6",
+        "babel-polyfill": "^6.26.0",
         "bcrypt": "^4.0.1",
         "cookie-parser": "~1.4.4",
         "cors": "^2.8.5",
