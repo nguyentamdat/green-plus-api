@@ -107,7 +107,7 @@ client.on("message", async(topic, message, packet) => {
                         min: "$min",
                         max: "$max",
                         id: "$id",
-                        log: { $slice: ["$log", -50] },
+                        log: { $slice: ["$log", -500] },
                     },
                 },
             ],
