@@ -2,6 +2,7 @@ import mqtt from "mqtt";
 import Devices from "../models/Devices";
 require("dotenv").config();
 import mongoose from "mongoose";
+import Device from "../models/Devices";
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
 const client = mqtt.connect(process.env.MQTT_URI, {
     username: process.env.MQTT_USERNAME,
@@ -27,16 +28,14 @@ client.subscribe("Topic/#", { qos: 2 }, (err, granted) => {
 setInterval(() => {
     console.log("Interval actived");
     Devices.aggregate(
-        [
-            {
-                $project: {
-                    min: "$min",
-                    max: "$max",
-                    id: "$id",
-                    log: { $slice: ["$log", -1] },
-                },
+        [{
+            $project: {
+                min: "$min",
+                max: "$max",
+                id: "$id",
+                log: { $slice: ["$log", -1] },
             },
-        ],
+        }, ],
         (err, res) => {
             console.log(err);
             const checkInRange = (val, min, max) => val >= min && val <= max;
@@ -49,10 +48,10 @@ setInterval(() => {
             res = res
                 .filter(
                     (item) =>
-                        item.min &&
-                        item.max &&
-                        item.min.length > 0 &&
-                        item.max.length > 0
+                    item.min &&
+                    item.max &&
+                    item.min.length > 0 &&
+                    item.max.length > 0
                 )
                 .map((item) => [item.min, item.max, item.latest]);
             res = res.map((item) =>
@@ -93,19 +92,21 @@ setInterval(() => {
     );
 }, 5000);
 
-client.on("message", (topic, message, packet) => {
+client.on("message", async(topic, message, packet) => {
     try {
         const [msg] = JSON.parse(message);
-        Devices.updateOne(
-            { id: msg.device_id },
-            { $push: { log: { values: msg.values, time: Date.now() } } },
-            (err, result) => {
-                if (err) {
-                    return console.log(err);
-                }
-                //console.log(result);
-            }
-        );
+        let doc = await Device.findOne({ id: msg.device_id });
+        doc.log = await doc.log.slice(-500)
+        await doc.log.push({ values: msg.values, time = Date.now() });
+        await doc.save();
+        // Devices.updateOne({ id: msg.device_id }, { $push: { log: { values: msg.values, time: Date.now() } } },
+        //     (err, result) => {
+        //         if (err) {
+        //             return console.log(err);
+        //         }
+        //         //console.log(result);
+        //     }
+        // );
     } catch (e) {
         console.log(e);
     }
